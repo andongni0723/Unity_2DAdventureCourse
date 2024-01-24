@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
@@ -15,14 +16,17 @@ public class PlayerController : MonoBehaviour
     public float canJumpCount = 2;
     
     [Header("Debug")]
-    public Vector2 inputDirection;
+    [SerializeField] private Vector2 inputDirection;
+
+    [SerializeField] private bool isWalk;
 
     private int currentJumpCount = 0;
-    
+
     private void Awake()
     {
         inputControls = new PlayerInputControls();
         inputControls.Gameplay.Jump.started += _ => Jump();
+        inputControls.Gameplay.Walk.started += _ => ChangeToWalk();
     }
 
     #region Event
@@ -44,18 +48,26 @@ public class PlayerController : MonoBehaviour
         Movement();
     }
     
-    
     /// <summary>
     /// Player move and flip
     /// </summary>
     private void Movement()
     {
         // Move
-        inputDirection = inputControls.Gameplay.Move.ReadValue<Vector2>().normalized;
+        inputDirection = inputControls.Gameplay.Move.ReadValue<Vector2>();
         rb.velocity = new Vector2(speed * inputDirection.x, rb.velocity.y);
         
         // Flip
-        spriteRenderer.flipX = inputDirection.x < 0;
+        if (inputDirection.x > 0)
+            spriteRenderer.flipX = false;
+        if (inputDirection.x < 0)
+            spriteRenderer.flipX = true;
+    }
+    
+    private void ChangeToWalk()
+    {
+        isWalk = !isWalk;
+        speed = isWalk? speed / 2 : speed * 2;
     }
 
     /// <summary>
