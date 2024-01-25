@@ -1,35 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using UnityEngine;
+using System;
+using Cysharp.Threading.Tasks;
+#pragma warning disable CS4014
 
 public class Timer
 {
     public bool isFinished;
-    public delegate void TimerFinishedDelegate();
-    public event TimerFinishedDelegate timerFinishedDelegate;
+    public event Action timerFinishedEvent;
 
-    private float timer = 0;
-    
+    private void CallTimerFinishedEvent()
+    {
+        timerFinishedEvent?.Invoke();
+    }
+
     /// <summary>
     /// Start timer (Call by other script)
     /// </summary>
     /// <param name="duration">timer duration</param>
     public void StartTimer(float duration)
     {
-        timer = 0;
-        
         TimerAction(duration);
     }
 
-    private async void TimerAction(float duration)
+    
+    /// <summary>
+    /// Timer Action
+    /// </summary>
+    /// <param name="duration"></param>
+    private async UniTask TimerAction(float duration)
     {
         isFinished = false;
-        await Task.Delay((int) (duration * 1000));
-        
+        await UniTask.Delay(TimeSpan.FromSeconds(duration));
+
         // Execute delegate 
-        timerFinishedDelegate!();
+        CallTimerFinishedEvent();
         isFinished = true;
     }
 }

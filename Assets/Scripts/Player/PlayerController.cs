@@ -9,16 +9,20 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb => GetComponent<Rigidbody2D>();
     private SpriteRenderer spriteRenderer => GetComponent<SpriteRenderer>();
     private PhysicsCheck physicsCheck => GetComponent<PhysicsCheck>();
+    public PlayerAnimation playerAnimation => GetComponent<PlayerAnimation>();
 
     [Header("Settings")] 
     public float speed = 10;
+    public float hurtForce = 5;
     public float jumpForce = 10;
     public float canJumpCount = 2;
-    
+
     [Header("Debug")]
     [SerializeField] private Vector2 inputDirection;
-
     [SerializeField] private bool isWalk;
+    public bool isHurt;
+    public bool isDead;
+    public bool isAttack;
 
     private int currentJumpCount = 0;
 
@@ -27,8 +31,9 @@ public class PlayerController : MonoBehaviour
         inputControls = new PlayerInputControls();
         inputControls.Gameplay.Jump.started += _ => Jump();
         inputControls.Gameplay.Walk.started += _ => ChangeToWalk();
+        inputControls.Gameplay.Attack.started += _ => PlayerAttack();
     }
-
+    
     #region Event
 
     private void OnEnable()
@@ -45,7 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Movement();
+        if(!isHurt)
+            Movement();
     }
     
     /// <summary>
@@ -86,4 +92,35 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
     }
+    
+    private void PlayerAttack()
+    {
+        isAttack = true;
+        playerAnimation.PlayAttack();
+    }
+
+
+    #region Unity Event
+    
+    /// <summary>
+    /// Player Add hurt force (Call by Character.cs)
+    /// </summary>
+    /// <param name="attacker"></param>
+    public void GetHurt(Transform attacker)
+    {
+        isHurt = true;
+        rb.velocity = Vector2.zero;
+        
+        Vector2 reboundDir = new Vector2(-(attacker.transform.position.x - transform.position.x), 0).normalized;
+        rb.AddForce(reboundDir * hurtForce, ForceMode2D.Impulse);
+    }
+
+    public void PlayerDead()
+    {
+        isDead = true;
+        inputControls.Gameplay.Disable();
+    }
+    
+    #endregion
+
 }
