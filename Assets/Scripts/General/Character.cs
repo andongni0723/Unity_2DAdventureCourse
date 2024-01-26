@@ -32,15 +32,22 @@ public class Character : MonoBehaviour
 
     private void OnEnable()
     {
-        invulnerableTimer.timerFinishedEvent += TimerFinished;
+        invulnerableTimer.timerStartEvent += TimerStart;
+        invulnerableTimer.timerFinishEvent += TimerFinish;
     }
 
     private void OnDisable()
     {
-        invulnerableTimer.timerFinishedEvent -= TimerFinished;
+        invulnerableTimer.timerStartEvent -= TimerStart;
+        invulnerableTimer.timerFinishEvent -= TimerFinish;
+    }
+    
+    private void TimerStart()
+    {
+        isInvulnerable = true;
     }
 
-    private void TimerFinished()
+    private void TimerFinish()
     {
         isInvulnerable = false;
     }
@@ -60,6 +67,8 @@ public class Character : MonoBehaviour
         if(currentHealth - attacker.damage > 0)
         {
             currentHealth -= attacker.damage;
+            Debug.Log(attacker.name + " Hit " + transform.name);
+
             TriggerInvulnerable();
             
             // Hurt Action
@@ -83,7 +92,6 @@ public class Character : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            isInvulnerable = true;
             invulnerableTimer.StartTimer(invulnerableDuration);
         }
     }

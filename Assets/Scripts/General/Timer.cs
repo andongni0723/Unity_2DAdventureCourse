@@ -5,11 +5,16 @@ using Cysharp.Threading.Tasks;
 public class Timer
 {
     public bool isFinished;
-    public event Action timerFinishedEvent;
-
-    private void CallTimerFinishedEvent()
+    public event Action timerStartEvent;
+    public event Action timerFinishEvent;
+    
+    private void CallTimerStartEvent()
     {
-        timerFinishedEvent?.Invoke();
+        timerStartEvent?.Invoke();
+    }
+    private void CallTimerFinishEvent()
+    {
+        timerFinishEvent?.Invoke();
     }
 
     /// <summary>
@@ -20,19 +25,15 @@ public class Timer
     {
         TimerAction(duration);
     }
-
     
-    /// <summary>
-    /// Timer Action
-    /// </summary>
-    /// <param name="duration"></param>
     private async UniTask TimerAction(float duration)
     {
         isFinished = false;
+        
+        CallTimerStartEvent();
         await UniTask.Delay(TimeSpan.FromSeconds(duration));
-
-        // Execute delegate 
-        CallTimerFinishedEvent();
+        CallTimerFinishEvent();
+        
         isFinished = true;
     }
 }

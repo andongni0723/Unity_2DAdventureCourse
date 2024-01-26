@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
@@ -8,8 +9,12 @@ public class PlayerController : MonoBehaviour
     private PlayerInputControls inputControls;
     private Rigidbody2D rb => GetComponent<Rigidbody2D>();
     private SpriteRenderer spriteRenderer => GetComponent<SpriteRenderer>();
+    private Collider2D collider => GetComponent<Collider2D>();
     private PhysicsCheck physicsCheck => GetComponent<PhysicsCheck>();
-    public PlayerAnimation playerAnimation => GetComponent<PlayerAnimation>();
+    private PlayerAnimation playerAnimation => GetComponent<PlayerAnimation>();
+
+    public PhysicsMaterial2D normal;
+    public PhysicsMaterial2D wall;
 
     [Header("Settings")] 
     public float speed = 10;
@@ -50,10 +55,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!isHurt)
+        if(!isHurt && !isAttack)
             Movement();
+
+        CheckState();
     }
+
     
+
     /// <summary>
     /// Player move and flip
     /// </summary>
@@ -65,9 +74,10 @@ public class PlayerController : MonoBehaviour
         
         // Flip
         if (inputDirection.x > 0)
-            spriteRenderer.flipX = false;
+            transform.localScale = new Vector3(1, 1, 1);
         if (inputDirection.x < 0)
-            spriteRenderer.flipX = true;
+            transform.localScale = new Vector3(-1, 1, 1);
+
     }
     
     private void ChangeToWalk()
@@ -98,7 +108,12 @@ public class PlayerController : MonoBehaviour
         isAttack = true;
         playerAnimation.PlayAttack();
     }
-
+    
+    private void CheckState()
+    {
+        // Change physics material
+        collider.sharedMaterial = physicsCheck.isGround ? normal : wall;
+    }
 
     #region Unity Event
     
