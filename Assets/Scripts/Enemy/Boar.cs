@@ -8,11 +8,10 @@ public class Boar : Enemy
     //[Header("Settings")]
     //[Header("Debug")]
 
-    protected override void Move()
+    protected override void Awake()
     {
-        base.Move();
-        
-        if(!isWait)
-            animator.SetBool("isWalk", true);
+        base.Awake();
+        patrolState = new BoarPatrolState();
+        chaseState = new BoarChaseState();
     }
 }
