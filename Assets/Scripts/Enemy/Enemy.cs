@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(CapsuleCollider2D))]
-[RequireComponent(typeof(PhysicsCheck))]
+[RequireComponent(typeof(PhysicsCheck), typeof(Character ), typeof(Attack))]
 public class Enemy : MonoBehaviour
 {
     //[Header("Component")]
@@ -16,18 +16,19 @@ public class Enemy : MonoBehaviour
     
     protected CapsuleCollider2D capsuleCollider => GetComponent<CapsuleCollider2D>();
     [HideInInspector] public PhysicsCheck physicsCheck => GetComponent<PhysicsCheck>();
+    [HideInInspector] public Character character => GetComponent<Character>();
     
     [Header("Settings")] 
     public float normalSpeed = 10;
     public float chaseSpeed = 15;
     public float hurtForce = 5;
     public float waitTime = 1;
-    public float lostTargetTime;
+    public float lostTargetTime = 2;
     
     [Space(20)]
-    public Vector2 centerOffset;
-    public Vector2 checkSize;
-    public float checkDistance;
+    public Vector2 centerOffset = new Vector2(0, 0.6f);
+    public Vector2 checkSize = new Vector2(1, 1);
+    public float checkDistance = 4.5f;
     public LayerMask playerLayer;
     
     [Header("Debug")]
@@ -39,9 +40,11 @@ public class Enemy : MonoBehaviour
     public bool isDead;
     public bool hasTarget;
 
-    private BaseState currentState;
-    protected BaseState patrolState;
-    protected BaseState chaseState;
+    public NPCState currentNPCState;
+    public BaseState currentState;
+    [HideInInspector] public BaseState patrolState;
+    [HideInInspector] public BaseState chaseState;
+    [HideInInspector] public BaseState skillState;
     
     [HideInInspector] public Timer waitTimer = new Timer();
     [HideInInspector] public Timer LostTargetTimer = new Timer();
@@ -53,41 +56,42 @@ public class Enemy : MonoBehaviour
 
     #region Event
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         // State
         currentState = patrolState;
+        currentNPCState = NPCState.Patrol;
         currentState.OnEnter(this);
         
         // Timer
-        waitTimer.timerStartEvent += TimerStart;
-        waitTimer.timerFinishEvent += TimerFinish;
+        waitTimer.timerStartEvent += FlipTimerStart; // prepare to turn back
+        waitTimer.timerFinishEvent += FlipTimerFinish;// turn back
         
-        LostTargetTimer.timerFinishEvent += LostTargetTimerFinish;
+        LostTargetTimer.timerFinishEvent += LostTargetTimerFinish; // lost target
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         // State
         currentState.OnExit();
         
         // Timer
-        waitTimer.timerStartEvent -= TimerStart;
-        waitTimer.timerFinishEvent -= TimerFinish;
+        waitTimer.timerStartEvent -= FlipTimerStart;
+        waitTimer.timerFinishEvent -= FlipTimerFinish;
         
         LostTargetTimer.timerFinishEvent -= LostTargetTimerFinish;
     }
 
-    private void TimerStart()
+    private void FlipTimerStart()
     {
         isWait = true;
         transform.localScale = new Vector3(faceDir.x, 1, 1);
+        Debug.Log("S");
     }
 
-    private void TimerFinish()
+    private void FlipTimerFinish()
     {
         isWait = false;
-        // transform.localScale = new Vector3(faceDir.x, 1, 1);
     }
 
     private void LostTargetTimerFinish()
@@ -109,6 +113,9 @@ public class Enemy : MonoBehaviour
         // State
         currentState.LogicUpdate();
         
+        // Check Player
+        FoundPlayer();
+        
         // left: -1, right: 1
         faceDir = new Vector3(-transform.localScale.x, 0, 0);
 
@@ -116,16 +123,14 @@ public class Enemy : MonoBehaviour
         if (hasTarget && !FoundPlayer() && !LostTargetTimer.isTiming)
         {
             LostTargetTimer.StartTimer(lostTargetTime);
-            Debug.Log("Lost Timer Start");
         }
         else if (hasTarget && FoundPlayer() && LostTargetTimer.isTiming)
         {
             LostTargetTimer.StopTimer();
-            Debug.Log("Lost Timer End S");
 
         }
     }
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         // State
         currentState.PhysicsUpdate();
@@ -149,10 +154,11 @@ public class Enemy : MonoBehaviour
     /// Is FindPlayer
     /// </summary>
     /// <returns></returns>
-    public bool FoundPlayer()
+    public virtual bool FoundPlayer()
     {
-        var result = Physics2D.BoxCast(transform.position + (Vector3)centerOffset, checkSize, 0,
-            faceDir, checkDistance, playerLayer);
+        var result = Physics2D.BoxCast(transform.position + (Vector3)centerOffset + 
+                                       new Vector3(checkDistance * -transform.localScale.x, 0), checkSize, 0,
+                        faceDir, checkDistance, playerLayer);
 
         if (result) hasTarget = true;
         
@@ -169,18 +175,20 @@ public class Enemy : MonoBehaviour
         {
             NPCState.Patrol => patrolState,
             NPCState.Chase => chaseState,
+            NPCState.Skill => skillState,
             _ => null
         };
         
         currentState.OnExit();
         currentState = newState;
+        currentNPCState = state;
         currentState?.OnEnter(this);
     }
 
     
     #region Unity Event
 
-    public void OnTakeDamage(Transform attackTrans)
+    public virtual void OnTakeDamage(Transform attackTrans)
     {
         attacker = attackTrans;
         

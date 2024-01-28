@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class BoarChaseState : BaseState
 {
+    
     public override void OnEnter(Enemy enemy)
     {
         currentEnemy = enemy;
@@ -23,7 +25,7 @@ public class BoarChaseState : BaseState
         }
         
         // Check to Patrol
-        if (currentEnemy.LostTargetTimer.isFinished)
+        if (!currentEnemy.hasTarget)
         {
             currentEnemy.SwitchState(NPCState.Patrol);
         }

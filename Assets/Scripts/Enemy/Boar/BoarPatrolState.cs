@@ -34,7 +34,7 @@ public class BoarPatrolState : BaseState
         // Find enemy, change state to chase
         if (currentEnemy.FoundPlayer())
         {
-            currentEnemy.SwitchState(NPCState.Chase);
+            currentEnemy.SwitchState(NPCState.Chase); 
         }
     }
 

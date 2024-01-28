@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks;
 
 public class Timer
 {
+    private TaskSingol.CtsInfo ctsInfo;
     public bool isTiming;
     public bool isFinished;
     public event Action timerStartEvent;
@@ -29,7 +30,7 @@ public class Timer
     /// <param name="duration">timer duration</param>
     public void StartTimer(float duration)
     {
-        var ctsInfo = TaskSingol.CreatCts();
+        ctsInfo = TaskSingol.CreatCts();
         TimerAction(duration, ctsInfo.cts.Token);
     }
     
@@ -37,7 +38,7 @@ public class Timer
     {
         //isFinished = false;
         isTiming = false;
-        TaskSingol.CancelAllTask(); 
+        TaskSingol.CancelTask(ctsInfo.id);
     }
     
     private async UniTask TimerAction(float duration, CancellationToken ctx)
@@ -48,7 +49,6 @@ public class Timer
         CallTimerStartEvent();
         await UniTask.Delay(TimeSpan.FromSeconds(duration), cancellationToken: ctx);
         CallTimerFinishEvent();
-        Debug.Log("End");
         
         isTiming = false;
         isFinished = true;

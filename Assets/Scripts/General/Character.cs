@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     [Header("Settings")] 
     public float maxHealth;
     public float invulnerableDuration;
+    public bool isTakeDamagePermanentInvulnerable;
 
     [Header("Debug")]
     public float currentHealth;
@@ -58,6 +59,7 @@ public class Character : MonoBehaviour
     /// The character has attacked by attacker (Call by Attack.cs)
     /// </summary>
     /// <param name="attacker">object to attack character</param>
+    /// <param name="isPermanentInvulnerable">the invulnerable will open permanent, until you manual close</param>(
     public void TakeDamage(Attack attacker)
     {
         // Check invulnerable
@@ -69,7 +71,10 @@ public class Character : MonoBehaviour
             currentHealth -= attacker.damage;
             Debug.Log(attacker.name + " Hit " + transform.name);
 
-            TriggerInvulnerable();
+            if(isTakeDamagePermanentInvulnerable)
+                isInvulnerable = true;
+            else
+                TriggerInvulnerable();
             
             // Hurt Action
             OnTakeDamage?.Invoke(attacker.transform);
