@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnailSkillState : BaseState
+public class SnailSkillState : BaseState<Snail>
 {
     //[Header("Component")]
     //[Header("Settings")]
     //[Header("Debug")]
-    public override void OnEnter(Enemy enemy)
+    public override void OnEnter(Snail enemy)
     {
         currentEnemy = enemy;
         currentEnemy.currentSpeed = currentEnemy.normalSpeed;

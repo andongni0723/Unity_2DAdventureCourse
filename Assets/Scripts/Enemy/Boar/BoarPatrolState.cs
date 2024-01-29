@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoarPatrolState : BaseState
+public class BoarPatrolState : BaseState<Boar>
 {
     //[Header("Component")]
     //[Header("Settings")]
     //[Header("Debug")]
-    public override void OnEnter(Enemy enemy)
+    public override void OnEnter(Boar enemy)
     {
         currentEnemy = enemy;
         currentEnemy.currentSpeed = currentEnemy.normalSpeed;

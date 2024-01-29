@@ -7,7 +7,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(CapsuleCollider2D))]
 [RequireComponent(typeof(PhysicsCheck), typeof(Character ), typeof(Attack))]
-public class Enemy : MonoBehaviour
+public class Enemy<T> : MonoBehaviour where T : Enemy<T>
 {
     //[Header("Component")]
     private Rigidbody2D rb => GetComponent<Rigidbody2D>();
@@ -40,11 +40,12 @@ public class Enemy : MonoBehaviour
     public bool isDead;
     public bool hasTarget;
 
+    protected T enemyType;
     public NPCState currentNPCState;
-    public BaseState currentState;
-    [HideInInspector] public BaseState patrolState;
-    [HideInInspector] public BaseState chaseState;
-    [HideInInspector] public BaseState skillState;
+    public BaseState<T>  currentState;
+    [HideInInspector] public BaseState<T> patrolState;
+    [HideInInspector] public BaseState<T>  chaseState;
+    [HideInInspector] public BaseState<T>  skillState;
     
     [HideInInspector] public Timer waitTimer = new Timer();
     [HideInInspector] public Timer LostTargetTimer = new Timer();
@@ -61,7 +62,8 @@ public class Enemy : MonoBehaviour
         // State
         currentState = patrolState;
         currentNPCState = NPCState.Patrol;
-        currentState.OnEnter(this);
+        // currentState.OnEnter<T>(T);
+        currentState.OnEnter(enemyType);
         
         // Timer
         waitTimer.timerStartEvent += FlipTimerStart; // prepare to turn back
@@ -101,11 +103,11 @@ public class Enemy : MonoBehaviour
 
     #endregion
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position + (Vector3)centerOffset + 
-                              new Vector3(checkDistance * -transform.localScale.x, 0), 0.2f);
+                              new Vector3(checkDistance * -transform.localScale.x, 0), checkSize.x);
     }
 
     private void Update()
@@ -115,6 +117,7 @@ public class Enemy : MonoBehaviour
         
         // Check Player
         FoundPlayer();
+        
         
         // left: -1, right: 1
         faceDir = new Vector3(-transform.localScale.x, 0, 0);
@@ -182,7 +185,7 @@ public class Enemy : MonoBehaviour
         currentState.OnExit();
         currentState = newState;
         currentNPCState = state;
-        currentState?.OnEnter(this);
+        currentState?.OnEnter(enemyType);
     }
 
     

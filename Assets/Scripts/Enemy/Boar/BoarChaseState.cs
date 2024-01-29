@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class BoarChaseState : BaseState
+public class BoarChaseState : BaseState<Boar>
 {
     
-    public override void OnEnter(Enemy enemy)
+    public override void OnEnter(Boar enemy)
     {
         currentEnemy = enemy;
         currentEnemy.currentSpeed = currentEnemy.chaseSpeed;

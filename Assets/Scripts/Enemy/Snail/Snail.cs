@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Snail : Enemy
+public class Snail : Enemy<Snail>
 {
     //[Header("Component")]
     //[Header("Settings")]
