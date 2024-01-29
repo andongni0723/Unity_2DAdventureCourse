@@ -12,7 +12,7 @@ public class Snail : Enemy<Snail>
     protected override void Awake()
     {
         base.Awake();
-        // State
+        enemyType = this;
         patrolState = new SnailPatrolState();
         skillState = new SnailSkillState(); 
         currentState = patrolState;

@@ -18,11 +18,20 @@ public class BeePatrolState : BaseState<Bee>
 
     public override void LogicUpdate()
     {
-        if(currentEnemy.transform.position == currentEnemy.targetPos)
-            currentEnemy.NewTargetPos();
-        
-        if(currentEnemy.FoundPlayer() && currentEnemy.isInPatrolRange)
+        // Prepare to go to target point
+        if (currentEnemy.transform.position == currentEnemy.targetPos && !currentEnemy.isWait)
+        {
+            currentEnemy.waitTimer.StartTimer(currentEnemy.waitTime);
+            Debug.Log("timer");
+        }
+
+        // Player in the patrol range to chase
+        if (currentEnemy.FoundPlayer() && currentEnemy.isInPatrolArea)
+        {
+            currentEnemy.waitTimer.StopTimer();
+            currentEnemy.isWait = false;
             currentEnemy.SwitchState(NPCState.Chase);
+        }
     }
 
     public override void PhysicsUpdate()

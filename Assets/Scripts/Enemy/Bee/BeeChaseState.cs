@@ -16,9 +16,14 @@ public class BeeChaseState : BaseState<Bee>
 
     public override void LogicUpdate()
     {
-        currentEnemy.targetPos = currentEnemy.transform.position;
+        // target is player
+        currentEnemy.targetPos = currentEnemy.player.transform.position + 
+                                 Vector3.right * -currentEnemy.faceDir.x + Vector3.up * 2;
 
-        if (!currentEnemy.hasTarget || !currentEnemy.isInPatrolRange)
+        if(currentEnemy.transform.position == currentEnemy.targetPos)
+            currentEnemy.animator.SetTrigger("attack");
+        
+        if (!currentEnemy.hasTarget || !currentEnemy.isInMoveArea)
             currentEnemy.SwitchState(NPCState.Patrol);
     }
 
@@ -29,5 +34,6 @@ public class BeeChaseState : BaseState<Bee>
     public override void OnExit()
     {
         currentEnemy.animator.SetBool("isRun", false);
+        Debug.Log("Exit");
     }
 }

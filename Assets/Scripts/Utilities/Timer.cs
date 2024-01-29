@@ -38,7 +38,8 @@ public class Timer
     {
         //isFinished = false;
         isTiming = false;
-        TaskSingol.CancelTask(ctsInfo.id);
+        if (ctsInfo != null)
+            TaskSingol.CancelTask(ctsInfo.id);
     }
     
     private async UniTask TimerAction(float duration, CancellationToken ctx)

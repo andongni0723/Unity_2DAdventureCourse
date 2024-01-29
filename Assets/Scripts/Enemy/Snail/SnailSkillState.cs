@@ -19,7 +19,7 @@ public class SnailSkillState : BaseState<Snail>
     {
         if (!currentEnemy.hasTarget)
         {
-            currentEnemy.animator.SetTrigger("isWake");
+            currentEnemy.animator.SetTrigger("wake");
             currentEnemy.SwitchState(NPCState.Patrol);
         }
     }

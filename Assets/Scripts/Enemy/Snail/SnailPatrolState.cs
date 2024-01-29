@@ -23,7 +23,6 @@ public class SnailPatrolState : BaseState<Snail>
         if ((isTouchWall || !currentEnemy.physicsCheck.isGround) && !currentEnemy.isWait)
         {
             currentEnemy.waitTimer.StartTimer(currentEnemy.waitTime);
-            Debug.Log("Walk");
             currentEnemy.animator.SetBool("isWalk", false);  
         }
         else if (!currentEnemy.isWait)

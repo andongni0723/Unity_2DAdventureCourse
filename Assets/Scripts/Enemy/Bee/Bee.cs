@@ -12,18 +12,43 @@ public class Bee : Enemy<Bee>
     public float chaseRange;
     
     [Header("Debug")]
-    public bool isInPatrolRange;
+    public bool isInMoveArea;
+    public bool isInPatrolArea;
     public Vector3 originPos; 
     public Vector3 targetPos;
     
     
-    private GameObject player => GameObject.FindWithTag("Player");
+    public GameObject player => GameObject.FindWithTag("Player");
 
-    protected override void OnEnable()
+    
+
+    protected override void Awake()
     {
+        base.Awake();
         enemyType = this; 
-        base.OnEnable();
+        patrolState = new BeePatrolState();
+        chaseState = new BeeChaseState();
+        currentState = patrolState;
+        originPos = transform.position;
     }
+
+    #region Event
+    protected override void FlipTimerStart()
+    {
+        isWait = true;
+        Debug.Log("S");
+    }
+
+    protected override void FlipTimerFinish()
+    {
+        isWait = false;
+        
+        if(currentNPCState != NPCState.Chase)
+            NewTargetPos();
+        
+    }
+
+    #endregion 
 
     protected override void OnDrawGizmos()
     {
@@ -33,40 +58,30 @@ public class Bee : Enemy<Bee>
         Gizmos.DrawWireSphere(originPos, chaseRange);
     }
 
-    protected override void Awake()
+    protected override void Update()
     {
+        base.Update();
         
-        base.Awake();
-        patrolState = new BeePatrolState();
-        chaseState = new BeeChaseState();
-        currentState = patrolState;
-        originPos = transform.position;
-        
-    }
+        // Flip
+        transform.localScale = targetPos.x - transform.position.x > 0 ?
+            new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
 
-    protected override void FixedUpdate()
-    {
-        // if(currentNPCState == NPCState.Patrol && transform.position == targetPos)
-        // {
-        //     targetPos = originPos + Vector3.one * Random.Range(0, patrolRange);
-        // }
-        // else if (currentNPCState == NPCState.Chase)
-        // {
-        //     targetPos = player.transform.position;
-        // }
-        
-        base.FixedUpdate();
+        // Check bee is in move range
+        isInMoveArea = Mathf.Abs(transform.position.x - originPos.x) <= chaseRange &&
+                        Mathf.Abs(transform.position.y - originPos.y) <= chaseRange;
+        isInPatrolArea = Mathf.Abs(transform.position.x - originPos.x) <= patrolRange &&
+                         Mathf.Abs(transform.position.y - originPos.y) <= patrolRange;
     }
-
 
     protected override void Move()
     {
-        // targetPos = originPos + Vector3.one * Random.Range(0, patrolRange);
-        Vector2.MoveTowards(transform.position, targetPos , currentSpeed);
+        transform.position = 
+            Vector3.MoveTowards(transform.position, targetPos , currentSpeed * Time.deltaTime);
     }
 
     public void NewTargetPos()
     {
-        targetPos = originPos + Vector3.one * Random.Range(0, patrolRange);
+        targetPos = originPos + new Vector3(Random.Range(-patrolRange, patrolRange), 
+            Random.Range(-patrolRange, patrolRange), 0);
     }
 }

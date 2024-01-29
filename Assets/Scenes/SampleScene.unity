@@ -1822,7 +1822,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: -2, z: 0}
@@ -1833,7 +1833,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: -2, z: 0}
@@ -1943,7 +1943,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 7.0000005
+      m_AnimationSpeed: 7
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: 2, z: 0}
@@ -2075,7 +2075,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 7.0000005
+      m_AnimationSpeed: 7
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: 6, z: 0}
@@ -2306,7 +2306,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 7
+      m_AnimationSpeed: 7.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 4, y: 13, z: 0}
@@ -2361,7 +2361,7 @@ Tilemap:
       - {fileID: 0}
       - {fileID: 0}
       - {fileID: 0}
-      m_AnimationSpeed: 7.0000005
+      m_AnimationSpeed: 7
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 14, z: 0}
@@ -2447,7 +2447,7 @@ GameObject:
   - component: {fileID: 1539761267}
   - component: {fileID: 1539761266}
   - component: {fileID: 1539761265}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2492,9 +2492,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -2048821313
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1252642511, guid: 8d287688a5a4f451d91fb06874cd1b1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2515,7 +2515,7 @@ Transform:
   m_GameObject: {fileID: 1539761262}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.36, y: -1.19, z: 0}
+  m_LocalPosition: {x: -4, y: 0.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2533,13 +2533,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca76469299295414e804b2be70e69608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSpeed: 100
+  normalSpeed: 3
   chaseSpeed: 5
   hurtForce: 5
   waitTime: 1
   lostTargetTime: 2
-  centerOffset: {x: 1.02, y: 1.92}
-  checkSize: {x: 1, y: 8}
+  centerOffset: {x: 1, y: 0}
+  checkSize: {x: 8, y: 8}
   checkDistance: 1
   playerLayer:
     serializedVersion: 2
@@ -2552,10 +2552,11 @@ MonoBehaviour:
   isDead: 0
   hasTarget: 0
   currentNPCState: 0
-  patrolRange: 3
+  patrolRange: 3.16
   chaseRange: 10
-  isInPatrolRange: 0
-  originPos: {x: -5.36, y: -1.19, z: 0}
+  isInMoveArea: 0
+  isInPatrolArea: 0
+  originPos: {x: -4, y: 0.79, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
 --- !u!114 &1539761266
 MonoBehaviour:
@@ -2584,17 +2585,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b5dacae855d442d8ea6c251e156ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  invulnerableDuration: 0
+  maxHealth: 50
+  invulnerableDuration: 0.1
   isTakeDamagePermanentInvulnerable: 0
   currentHealth: 0
   isInvulnerable: 0
   OnTakeDamage:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1539761265}
+        m_TargetAssemblyTypeName: Enemy`1[[Bee, Assembly-CSharp
+        m_MethodName: OnTakeDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDead:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1539761265}
+        m_TargetAssemblyTypeName: Enemy`1[[Bee, Assembly-CSharp
+        m_MethodName: OnDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1539761268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2608,9 +2633,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isManual: 1
-  bottomOffset: {x: 0, y: 1.17}
-  leftOffset: {x: -0.69, y: 2}
-  rightOffset: {x: 0.6, y: 2}
+  bottomOffset: {x: 0, y: -0.84}
+  leftOffset: {x: -0.69, y: 0}
+  rightOffset: {x: 0.72, y: 0}
   CheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
@@ -2647,10 +2672,10 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.042751074, y: 2.072431}
+  m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.3684363, y: 1.8063774}
   m_Direction: 0
 --- !u!95 &1539761270
@@ -2686,7 +2711,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 4
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -2699,8 +2724,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!61 &1539761272
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2733,10 +2758,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.3144648}
+  m_Offset: {x: 0, y: -0.69}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
+    pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4, y: 4}
     newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
@@ -2744,7 +2769,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.2689296}
+  m_Size: {x: 1.2715814, y: 0.2689296}
   m_EdgeRadius: 0
 --- !u!1 &1622452197
 GameObject:
@@ -6389,5 +6414,5 @@ SceneRoots:
   - {fileID: 1622452199}
   - {fileID: 5383657058954048386}
   - {fileID: 1065615584685721502}
-  - {fileID: 2030001821}
   - {fileID: 1539761264}
+  - {fileID: 2030001821}

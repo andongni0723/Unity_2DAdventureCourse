@@ -84,14 +84,13 @@ public class Enemy<T> : MonoBehaviour where T : Enemy<T>
         LostTargetTimer.timerFinishEvent -= LostTargetTimerFinish;
     }
 
-    private void FlipTimerStart()
+    protected virtual void FlipTimerStart()
     {
         isWait = true;
         transform.localScale = new Vector3(faceDir.x, 1, 1);
-        Debug.Log("S");
     }
 
-    private void FlipTimerFinish()
+    protected virtual void FlipTimerFinish()
     {
         isWait = false;
     }
@@ -110,7 +109,7 @@ public class Enemy<T> : MonoBehaviour where T : Enemy<T>
                               new Vector3(checkDistance * -transform.localScale.x, 0), checkSize.x);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         // State
         currentState.LogicUpdate();
