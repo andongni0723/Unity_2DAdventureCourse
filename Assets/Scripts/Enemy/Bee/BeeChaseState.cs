@@ -18,11 +18,16 @@ public class BeeChaseState : BaseState<Bee>
     {
         // target is player
         currentEnemy.targetPos = currentEnemy.player.transform.position + 
-                                 Vector3.right * -currentEnemy.faceDir.x + Vector3.up * 2;
+                                 Vector3.right * -currentEnemy.faceDir.x + Vector3.up * 1.5f;
 
-        if(currentEnemy.transform.position == currentEnemy.targetPos)
+        // near player to attack
+        if (currentEnemy.playerDistance < 2.5f && !currentEnemy.isAttackWait)
+        {
             currentEnemy.animator.SetTrigger("attack");
+            currentEnemy.attackTimer.StartTimer(currentEnemy.attackTime);
+        }
         
+        // Switch to patrol
         if (!currentEnemy.hasTarget || !currentEnemy.isInMoveArea)
             currentEnemy.SwitchState(NPCState.Patrol);
     }

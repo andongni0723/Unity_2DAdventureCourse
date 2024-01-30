@@ -6,7 +6,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(CapsuleCollider2D))]
-[RequireComponent(typeof(PhysicsCheck), typeof(Character ), typeof(Attack))]
+[RequireComponent(typeof(PhysicsCheck), typeof(Character ))]
 public class Enemy<T> : MonoBehaviour where T : Enemy<T>
 {
     //[Header("Component")]

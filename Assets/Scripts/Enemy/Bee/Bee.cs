@@ -10,17 +10,19 @@ public class Bee : Enemy<Bee>
     [Header("Settings")]
     public float patrolRange;
     public float chaseRange;
+    public float attackTime = 2.3f;
     
     [Header("Debug")]
     public bool isInMoveArea;
     public bool isInPatrolArea;
+    public bool isAttackWait;
     public Vector3 originPos; 
     public Vector3 targetPos;
-    
-    
+    public float playerDistance;
     public GameObject player => GameObject.FindWithTag("Player");
-
     
+    [HideInInspector] public Timer checkFlipTimer = new Timer();
+    [HideInInspector] public Timer attackTimer = new Timer();
 
     protected override void Awake()
     {
@@ -30,9 +32,47 @@ public class Bee : Enemy<Bee>
         chaseState = new BeeChaseState();
         currentState = patrolState;
         originPos = transform.position;
+        
+        checkFlipTimer.StartTimer(0);
     }
 
     #region Event
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        checkFlipTimer.timerFinishEvent += CheckFlipFinish;
+        attackTimer.timerStartEvent += AttackTimerStart;
+        attackTimer.timerFinishEvent += AttackTimerFinish;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        checkFlipTimer.timerFinishEvent -= CheckFlipFinish;
+        attackTimer.timerStartEvent -= AttackTimerStart;
+        attackTimer.timerFinishEvent -= AttackTimerFinish;
+    }
+
+    private void AttackTimerStart()
+    {
+        isAttackWait = true;
+    }
+
+    private void AttackTimerFinish()
+    {
+        isAttackWait = false;
+    }
+
+    private void CheckFlipFinish()
+    {
+        // Flip
+        transform.localScale = MathF.Abs(targetPos.x) - MathF.Abs(transform.position.x) > 0?
+            new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
+
+        checkFlipTimer.StartTimer(0.5f);
+    }
+
     protected override void FlipTimerStart()
     {
         isWait = true;
@@ -45,14 +85,12 @@ public class Bee : Enemy<Bee>
         
         if(currentNPCState != NPCState.Chase)
             NewTargetPos();
-        
     }
 
     #endregion 
 
-    protected override void OnDrawGizmos()
+    protected void OnDrawGizmosSelected()
     {
-        base.OnDrawGizmos();
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(originPos, patrolRange);
         Gizmos.DrawWireSphere(originPos, chaseRange);
@@ -62,9 +100,7 @@ public class Bee : Enemy<Bee>
     {
         base.Update();
         
-        // Flip
-        transform.localScale = targetPos.x - transform.position.x > 0 ?
-            new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
+        playerDistance = Vector3.Distance(transform.position, player.transform.position);
 
         // Check bee is in move range
         isInMoveArea = Mathf.Abs(transform.position.x - originPos.x) <= chaseRange &&
@@ -83,5 +119,8 @@ public class Bee : Enemy<Bee>
     {
         targetPos = originPos + new Vector3(Random.Range(-patrolRange, patrolRange), 
             Random.Range(-patrolRange, patrolRange), 0);
+        
+        transform.localScale = MathF.Abs(targetPos.x) - MathF.Abs(transform.position.x) > 0?
+            new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
     }
 }
