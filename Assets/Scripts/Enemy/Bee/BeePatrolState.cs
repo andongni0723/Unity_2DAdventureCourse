@@ -22,7 +22,6 @@ public class BeePatrolState : BaseState<Bee>
         if (currentEnemy.transform.position == currentEnemy.targetPos && !currentEnemy.isWait)
         {
             currentEnemy.waitTimer.StartTimer(currentEnemy.waitTime);
-            Debug.Log("timer");
         }
 
         // Player in the patrol range to chase

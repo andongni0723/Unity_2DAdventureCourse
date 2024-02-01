@@ -76,7 +76,6 @@ public class Bee : Enemy<Bee>
     protected override void FlipTimerStart()
     {
         isWait = true;
-        Debug.Log("S");
     }
 
     protected override void FlipTimerFinish()
