@@ -15,8 +15,7 @@ public class Character : MonoBehaviour
     public float currentHealth;
     public bool isInvulnerable;
     
-    [Space(15)]
-    [Header("Event")]
+    public UnityEvent<Character> OnHealthChange;
     public UnityEvent<Transform> OnTakeDamage;
     public UnityEvent OnDead;
     
@@ -27,6 +26,7 @@ public class Character : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
+        OnHealthChange?.Invoke(this);
     }
 
     #region Event
@@ -69,7 +69,6 @@ public class Character : MonoBehaviour
         if(currentHealth - attacker.damage > 0)
         {
             currentHealth -= attacker.damage;
-            Debug.Log(attacker.name + " Hit " + transform.name);
 
             if(isTakeDamagePermanentInvulnerable)
                 isInvulnerable = true;
@@ -87,6 +86,8 @@ public class Character : MonoBehaviour
             // Dead Action
             OnDead?.Invoke();
         }
+        
+        OnHealthChange?.Invoke(this);
         
     }
 
