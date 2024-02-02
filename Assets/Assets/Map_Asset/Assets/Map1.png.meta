@@ -11449,7 +11449,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_341
+      name: w1-1
       rect:
         serializedVersion: 2
         x: 48
@@ -11474,7 +11474,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_342
+      name: w2-1
       rect:
         serializedVersion: 2
         x: 64
@@ -11499,7 +11499,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_343
+      name: w3-1
       rect:
         serializedVersion: 2
         x: 80
@@ -11524,7 +11524,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_355
+      name: w1-2
       rect:
         serializedVersion: 2
         x: 48
@@ -11549,7 +11549,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_356
+      name: w2-2
       rect:
         serializedVersion: 2
         x: 64
@@ -11574,7 +11574,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_357
+      name: w3-2
       rect:
         serializedVersion: 2
         x: 80
@@ -11599,7 +11599,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_372
+      name: w1-3
       rect:
         serializedVersion: 2
         x: 48
@@ -11624,7 +11624,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_373
+      name: w2-3
       rect:
         serializedVersion: 2
         x: 64
@@ -11649,7 +11649,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_374
+      name: w3-3
       rect:
         serializedVersion: 2
         x: 80
@@ -11674,7 +11674,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_392
+      name: w1-4
       rect:
         serializedVersion: 2
         x: 48
@@ -11699,7 +11699,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_393
+      name: w2-4
       rect:
         serializedVersion: 2
         x: 64
@@ -11724,7 +11724,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Map1_394
+      name: w3-4
       rect:
         serializedVersion: 2
         x: 80
@@ -12038,9 +12038,6 @@ TextureImporter:
       Map1_339: 26071934
       Map1_34: -581190979
       Map1_340: 25504834
-      Map1_341: -914182757
-      Map1_342: 1124357098
-      Map1_343: -292488241
       Map1_344: -2015845503
       Map1_345: -1974005659
       Map1_346: 1818540040
@@ -12053,9 +12050,6 @@ TextureImporter:
       Map1_352: 1184656938
       Map1_353: 1123780843
       Map1_354: -769786185
-      Map1_355: -1922859684
-      Map1_356: 1034279675
-      Map1_357: 633572048
       Map1_358: -1325823878
       Map1_359: -1012186197
       Map1_36: 1047910881
@@ -12072,9 +12066,6 @@ TextureImporter:
       Map1_37: -1192338467
       Map1_370: 1464953494
       Map1_371: 982910462
-      Map1_372: 820619531
-      Map1_373: -55053467
-      Map1_374: -884285372
       Map1_375: -999350467
       Map1_376: -237523667
       Map1_377: -900873197
@@ -12094,9 +12085,6 @@ TextureImporter:
       Map1_39: 796347755
       Map1_390: -140499977
       Map1_391: 1975173522
-      Map1_392: 2133840338
-      Map1_393: 1592262458
-      Map1_394: 1481577798
       Map1_395: 1666657996
       Map1_396: -485475178
       Map1_397: 1840562315
@@ -12223,6 +12211,18 @@ TextureImporter:
       Map1_97: -1410258681
       Map1_98: 264793053
       Map1_99: 1300427770
+      w1-1: -914182757
+      w1-2: -1922859684
+      w1-3: 820619531
+      w1-4: 2133840338
+      w2-1: 1124357098
+      w2-2: 1034279675
+      w2-3: -55053467
+      w2-4: 1592262458
+      w3-1: -292488241
+      w3-2: 633572048
+      w3-3: -884285372
+      w3-4: 1481577798
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

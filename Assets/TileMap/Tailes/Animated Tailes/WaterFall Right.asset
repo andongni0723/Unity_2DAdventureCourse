@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: WaterFall Right
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 1258259134, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
-  - {fileID: 1444553990, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
-  - {fileID: 2094213946, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
-  - {fileID: -980947287, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
+  - {fileID: -292488241, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
+  - {fileID: 633572048, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
+  - {fileID: -884285372, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
+  - {fileID: 1481577798, guid: dafe9f4f5a07f4cb6bbb18941c212b4d, type: 3}
   m_MinSpeed: 7
   m_MaxSpeed: 7
   m_AnimationStartTime: 0
