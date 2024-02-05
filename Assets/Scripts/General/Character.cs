@@ -29,6 +29,17 @@ public class Character : MonoBehaviour
         OnHealthChange?.Invoke(this);
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Water"))
+        {
+            // Die 
+            currentHealth = 0;
+            OnHealthChange?.Invoke(this);
+            OnDead?.Invoke();
+        }
+    }
+
     #region Event
 
     private void OnEnable()
