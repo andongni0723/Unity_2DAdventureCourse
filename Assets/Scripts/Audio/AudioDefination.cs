@@ -21,7 +21,7 @@ public class AudioDefination : MonoBehaviour
             PlayAudioClip();
     }
 
-    private void PlayAudioClip()
+    public void PlayAudioClip()
     {
         playAudioEvent.RaiseEvent(audioClip);
     }

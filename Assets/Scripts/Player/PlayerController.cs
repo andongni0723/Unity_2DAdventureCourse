@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Collider2D collider => GetComponent<Collider2D>();
     private PhysicsCheck physicsCheck => GetComponent<PhysicsCheck>();
     private PlayerAnimation playerAnimation => GetComponent<PlayerAnimation>();
+    private AudioDefination audioDefination => GetComponent<AudioDefination>();
 
     public PhysicsMaterial2D normal;
     public PhysicsMaterial2D wall;
@@ -100,6 +101,7 @@ public class PlayerController : MonoBehaviour
             currentJumpCount++;
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            audioDefination.PlayAudioClip();
         }
     }
     

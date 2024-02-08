@@ -15,6 +15,8 @@ public class Sign : MonoBehaviour
     //[Header("Settings")]
     //[Header("Debug")]
 
+    private IInteractable targetItem;
+    private GameObject targetItemObj;
     private bool canPress;
 
     private void Awake()
@@ -26,6 +28,16 @@ public class Sign : MonoBehaviour
     private void OnEnable()
     {
         InputSystem.onActionChange += OnActionChange;
+        playerInput.Gameplay.Confirm.started += _ => OnConfirm(); // Start interactive item action
+    }
+
+    private void OnConfirm()
+    {
+        if (canPress)
+        {
+            targetItem.TriggerAction();
+            targetItemObj.GetComponent<AudioDefination>()?.PlayAudioClip();
+        }
     }
 
     /// <summary>
@@ -58,8 +70,12 @@ public class Sign : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if(other.CompareTag("Interactable"))
+        if (other.CompareTag("Interactable"))
+        {
             canPress = true;
+            targetItem = other.GetComponent<IInteractable>();
+            targetItemObj = other.gameObject;
+        }
     }
     
     private void OnTriggerExit2D(Collider2D other)
