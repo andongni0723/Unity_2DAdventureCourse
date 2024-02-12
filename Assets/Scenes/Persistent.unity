@@ -1143,6 +1143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impulseSource: {fileID: 355276315}
   cameraShakeEvent: {fileID: 11400000, guid: a7ba6d4896131403bba5a6ed2247c70f, type: 2}
+  afterSceneLoadEventSO: {fileID: 11400000, guid: c94b1f7ec59f14dcaa758a070666365c, type: 2}
 --- !u!114 &695848880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,7 +1552,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadEventSO: {fileID: 11400000, guid: 0dff41cd163f34f46928e2e7094a2832, type: 2}
+  afterSceneLoadEventSO: {fileID: 11400000, guid: c94b1f7ec59f14dcaa758a070666365c, type: 2}
   firstLoadScene: {fileID: 11400000, guid: 39e0fab3225ac4a1ab6fa6946edd98ef, type: 2}
+  playerTransform: {fileID: 1622452199}
+  firstPosition: {x: 7, y: 0, z: 0}
+  fadeDuration: 0
 --- !u!4 &946804120
 Transform:
   m_ObjectHideFlags: 0
@@ -2740,7 +2745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2030001821}
   m_Layer: 0
-  m_Name: \ SceneLoader 00:00
+  m_Name: \ Fade 00:00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
