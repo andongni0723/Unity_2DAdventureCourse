@@ -12,6 +12,7 @@ public class CameraControl : MonoBehaviour
     
     [Header("Event")]
     public VoidEventSO cameraShakeEvent;
+    public VoidEventSO afterSceneLoadEventSO;
     
     //[Header("Settings")]
     //[Header("Debug")]
@@ -21,11 +22,18 @@ public class CameraControl : MonoBehaviour
     private void OnEnable()
     {
         cameraShakeEvent.OnEventRaised += OnCameraSkakeEvent;
+        afterSceneLoadEventSO.OnEventRaised += OnAfterSceneLoadEvent;
     }
 
     private void OnDisable()
     {
         cameraShakeEvent.OnEventRaised -= OnCameraSkakeEvent;
+        afterSceneLoadEventSO.OnEventRaised -= OnAfterSceneLoadEvent;
+    }
+
+    private void OnAfterSceneLoadEvent()
+    {
+        GetNewCameraBound();
     }
 
     private void OnCameraSkakeEvent()
@@ -35,11 +43,6 @@ public class CameraControl : MonoBehaviour
 
     #endregion 
     
-    private void Start()
-    {
-        //TODO: New scene
-        GetNewCameraBound();
-    }
 
     private void GetNewCameraBound()
     {

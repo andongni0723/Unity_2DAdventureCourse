@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
 
 public class Sign : MonoBehaviour
 {
@@ -31,6 +32,11 @@ public class Sign : MonoBehaviour
         playerInput.Gameplay.Confirm.started += _ => OnConfirm(); // Start interactive item action
     }
 
+    private void OnDisable()
+    {
+        canPress = false;
+    }
+
     private void OnConfirm()
     {
         if (canPress)
@@ -55,7 +61,7 @@ public class Sign : MonoBehaviour
                 case Keyboard:
                     animator.Play("Keyboard");
                     break;
-                default:
+                case Gamepad:
                     animator.Play("PS");
                     break;
             }
