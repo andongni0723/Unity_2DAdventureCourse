@@ -13,6 +13,7 @@ public class SceneLoader : MonoBehaviour
     [Header("Event")]
     public SceneLoadEventSO loadEventSO;
     public VoidEventSO afterSceneLoadEventSO;
+    public FadeEventSO fadeEventSO;
     
     [Header("Data")]
     public GameSceneSO firstLoadScene;
@@ -55,11 +56,8 @@ public class SceneLoader : MonoBehaviour
     private void OnDisable()
     {
         loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
-
     }
 
-    
-    
     private void OnLoadRequestEvent(GameSceneSO locationToGo, Vector3 positionToGo, bool fadeScreen)
     {
         if(isLoading) return;
@@ -91,12 +89,13 @@ public class SceneLoader : MonoBehaviour
     {
         if (fadeScreen)
         {
-            //TODO: fade action
+            fadeEventSO.FadeIn(fadeDuration);
         }
         
         await UniTask.Delay(TimeSpan.FromSeconds(fadeDuration), cancellationToken: ctx);
         await currentLoadScene.sceneReference.UnLoadScene();
         playerTransform.gameObject.SetActive(false);
+        playerTransform.position = positionToGo;
         
         LoadNewScene();
     }
@@ -118,7 +117,8 @@ public class SceneLoader : MonoBehaviour
         
         if (fadeScreen)
         {
-            //TODO:
+            
+            fadeEventSO.FadeOut(fadeDuration);
         }
         
         isLoading = false;

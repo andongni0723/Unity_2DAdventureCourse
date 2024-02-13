@@ -6,6 +6,9 @@ using Random = UnityEngine.Random;
 
 public class Bee : Enemy<Bee>
 {
+    [Header("Event")] 
+    public VoidEventSO afterSceneLoadEvent;
+    
     //[Header("Component")]
     [Header("Settings")]
     public float patrolRange;
@@ -19,7 +22,7 @@ public class Bee : Enemy<Bee>
     public Vector3 originPos; 
     public Vector3 targetPos;
     public float playerDistance;
-    public GameObject player => GameObject.FindWithTag("Player");
+    public GameObject player ; //=> GameObject.FindWithTag("Player");
     
     [HideInInspector] public Timer checkFlipTimer = new Timer();
     [HideInInspector] public Timer attackTimer = new Timer();
@@ -27,6 +30,7 @@ public class Bee : Enemy<Bee>
     protected override void Awake()
     {
         base.Awake();
+        // player = GameObject.FindWithTag("Player");
         enemyType = this; 
         patrolState = new BeePatrolState();
         chaseState = new BeeChaseState();
@@ -44,6 +48,8 @@ public class Bee : Enemy<Bee>
         checkFlipTimer.timerFinishEvent += CheckFlipFinish;
         attackTimer.timerStartEvent += AttackTimerStart;
         attackTimer.timerFinishEvent += AttackTimerFinish;
+
+        afterSceneLoadEvent.OnEventRaised += OnAfterSceneLoadEvent;
     }
 
     protected override void OnDisable()
@@ -52,6 +58,12 @@ public class Bee : Enemy<Bee>
         checkFlipTimer.timerFinishEvent -= CheckFlipFinish;
         attackTimer.timerStartEvent -= AttackTimerStart;
         attackTimer.timerFinishEvent -= AttackTimerFinish;
+        afterSceneLoadEvent.OnEventRaised += OnAfterSceneLoadEvent;
+    }
+
+    private void OnAfterSceneLoadEvent()
+    {
+        player = GameObject.FindWithTag("Player");
     }
 
     private void AttackTimerStart()
@@ -99,7 +111,8 @@ public class Bee : Enemy<Bee>
     {
         base.Update();
         
-        playerDistance = Vector3.Distance(transform.position, player.transform.position);
+        if (player != null)
+            playerDistance = Vector3.Distance(transform.position, player.transform.position);
 
         // Check bee is in move range
         isInMoveArea = Mathf.Abs(transform.position.x - originPos.x) <= chaseRange &&

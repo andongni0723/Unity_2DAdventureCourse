@@ -358,6 +358,9 @@ MonoBehaviour:
   isTakeDamagePermanentInvulnerable: 0
   currentHealth: 0
   isInvulnerable: 0
+  OnHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
   OnTakeDamage:
     m_PersistentCalls:
       m_Calls:
@@ -419,6 +422,7 @@ MonoBehaviour:
   isDead: 0
   hasTarget: 0
   currentNPCState: 0
+  afterSceneLoadEvent: {fileID: 11400000, guid: c94b1f7ec59f14dcaa758a070666365c, type: 2}
   patrolRange: 3.16
   chaseRange: 10
   attackTime: 2.3
@@ -428,3 +432,4 @@ MonoBehaviour:
   originPos: {x: -4, y: 0.79, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   playerDistance: 0
+  player: {fileID: 0}
