@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Event")] 
+    public SceneLoadEventSO loadEventSO;
+    public VoidEventSO afterSceneLoadEventSO;
+    
     [Header("Components")]
     private PlayerInputControls inputControls;
     private Rigidbody2D rb => GetComponent<Rigidbody2D>();
@@ -45,11 +49,26 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         inputControls.Enable();
+        
+        loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
+        afterSceneLoadEventSO.OnEventRaised += OnAfterSceneLoadEvent;
     }
 
     private void OnDisable()
     {
         inputControls.Disable();
+        loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
+        afterSceneLoadEventSO.OnEventRaised -= OnAfterSceneLoadEvent;
+    }
+
+    private void OnLoadRequestEvent(GameSceneSO sceneSO, Vector3 position, bool fadeScreen)
+    {
+        inputControls.Disable();
+    }
+
+    private void OnAfterSceneLoadEvent()
+    {
+        inputControls.Enable();
     }
 
     #endregion
@@ -62,7 +81,6 @@ public class PlayerController : MonoBehaviour
         CheckState();
     }
 
-    
 
     /// <summary>
     /// Player move and flip

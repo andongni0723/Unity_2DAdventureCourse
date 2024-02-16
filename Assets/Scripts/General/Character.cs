@@ -6,6 +6,9 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
+    [Header("Event")]
+    public VoidEventSO newGameEventSO;
+    
     [Header("Settings")] 
     public float maxHealth;
     public float invulnerableDuration;
@@ -23,12 +26,17 @@ public class Character : MonoBehaviour
     private Timer invulnerableTimer = new Timer();
 
 
-    private void Awake()
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
+    private void NewGame()
     {
         currentHealth = maxHealth;
         OnHealthChange?.Invoke(this);
-    }
-
+    } 
+    
     private void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Water"))
@@ -46,12 +54,14 @@ public class Character : MonoBehaviour
     {
         invulnerableTimer.timerStartEvent += TimerStart;
         invulnerableTimer.timerFinishEvent += TimerFinish;
+        newGameEventSO.OnEventRaised += NewGame;
     }
 
     private void OnDisable()
     {
         invulnerableTimer.timerStartEvent -= TimerStart;
         invulnerableTimer.timerFinishEvent -= TimerFinish;
+        newGameEventSO.OnEventRaised -= NewGame;
     }
     
     private void TimerStart()

@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     
     [Header("Events")]
     public CharacterEventSO healthEvent;
+    public SceneLoadEventSO loadEventSO;
     //[Header("Settings")]
     //[Header("Debug")]
 
@@ -17,11 +18,20 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         healthEvent.OnEventRaised += OnHealthEvent;
+        loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
     }
 
     private void OnDisable()
     {
         healthEvent.OnEventRaised -= OnHealthEvent;
+        loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
+    }
+
+    private void OnLoadRequestEvent(GameSceneSO sceneToGo, Vector3 pos, bool fadeScreen)
+    {
+        bool isMenu = sceneToGo.sceneType == SceneType.Menu;
+       
+        playerStatusBar.gameObject.SetActive(!isMenu);
     }
 
     private void OnHealthEvent(Character character)
