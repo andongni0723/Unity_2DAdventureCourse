@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, ISaveable
 {
     [Header("Event")]
     public VoidEventSO newGameEventSO;
@@ -55,6 +55,9 @@ public class Character : MonoBehaviour
         invulnerableTimer.timerStartEvent += TimerStart;
         invulnerableTimer.timerFinishEvent += TimerFinish;
         newGameEventSO.OnEventRaised += NewGame;
+        
+        ISaveable saveable = this;
+        saveable.RegisterSaveData();
     }
 
     private void OnDisable()
@@ -62,6 +65,9 @@ public class Character : MonoBehaviour
         invulnerableTimer.timerStartEvent -= TimerStart;
         invulnerableTimer.timerFinishEvent -= TimerFinish;
         newGameEventSO.OnEventRaised -= NewGame;
+        
+        ISaveable saveable = this;
+        saveable.UnRegisterSaveData();
     }
     
     private void TimerStart()
@@ -120,6 +126,31 @@ public class Character : MonoBehaviour
         if (!isInvulnerable)
         {
             invulnerableTimer.StartTimer(invulnerableDuration);
+        }
+    }
+
+    public DataDefinition GetDataID()
+    {
+        return GetComponent<DataDefinition>();
+    }
+
+    public void GetSaveData(Data data)
+    {
+        if (data.characterPosDict.ContainsKey(GetDataID().ID))
+        {
+            data.characterPosDict[GetDataID().ID] = transform.position;
+        }
+        else
+        {
+            data.characterPosDict.Add(GetDataID().ID, transform.position);
+        }
+    }
+
+    public void LoadDate(Data data)
+    {
+        if (data.characterPosDict.ContainsKey(GetDataID().ID))
+        {
+            transform.position = data.characterPosDict[GetDataID().ID];
         }
     }
 }

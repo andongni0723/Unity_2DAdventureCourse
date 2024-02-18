@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 3594225067001328468}
   - component: {fileID: 944952574592072537}
   - component: {fileID: 1295104586638967354}
+  - component: {fileID: -1813515702404030358}
   m_Layer: 8
   m_Name: Bee
   m_TagString: Untagged
@@ -434,3 +435,17 @@ MonoBehaviour:
   targetPos: {x: 0, y: 0, z: 0}
   playerDistance: 0
   player: {fileID: 0}
+--- !u!114 &-1813515702404030358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8813610079436028343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5bd1ce9f2e44ddea14a836cd1f478a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistentType: 0
+  ID: 720a729e-b786-4e58-b375-c12385d91803

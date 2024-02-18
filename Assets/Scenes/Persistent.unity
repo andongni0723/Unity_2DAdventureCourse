@@ -1101,6 +1101,51 @@ MonoBehaviour:
   playAudioEvent: {fileID: 11400000, guid: b8272a454fd6248c0a85d37baa2ee251, type: 2}
   playOnEnable: 1
   audioClip: {fileID: 8300000, guid: d46323e22e74e46baa241cbf48c85671, type: 3}
+--- !u!1 &678255319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 678255321}
+  - component: {fileID: 678255320}
+  m_Layer: 0
+  m_Name: \\\Data Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &678255320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678255319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07cc565feaf94d14be79ca799b6b79f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveEvent: {fileID: 11400000, guid: 0a9083b5de18946a9b92517cebce7472, type: 2}
+--- !u!4 &678255321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678255319}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 568.87024, y: 2008.7437, z: 22.17556}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &695848874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,6 +2305,7 @@ GameObject:
   - component: {fileID: 1622452205}
   - component: {fileID: 1622452202}
   - component: {fileID: 1622452207}
+  - component: {fileID: 1622452208}
   m_Layer: 7
   m_Name: \\Player
   m_TagString: Player
@@ -2582,6 +2628,20 @@ MonoBehaviour:
   playAudioEvent: {fileID: 11400000, guid: b8272a454fd6248c0a85d37baa2ee251, type: 2}
   playOnEnable: 0
   audioClip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+--- !u!114 &1622452208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622452197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5bd1ce9f2e44ddea14a836cd1f478a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistentType: 0
+  ID: 1e1c01c4-bbca-40f9-ab27-f50012b6bc31
 --- !u!1 &1742277934
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,7 +2771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1929022715
 Transform:
   m_ObjectHideFlags: 0
@@ -3029,7 +3089,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2030001821}
   m_Layer: 0
-  m_Name: \ Save Point 14:13
+  m_Name: \ Scene Save 00:00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3136,6 +3196,7 @@ SceneRoots:
   - {fileID: 946804120}
   - {fileID: 2021261985}
   - {fileID: 1302091711}
+  - {fileID: 678255321}
   - {fileID: 1622452199}
   - {fileID: 897543372}
   - {fileID: 1421905751}

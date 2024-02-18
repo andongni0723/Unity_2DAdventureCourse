@@ -5,6 +5,9 @@ using UnityEngine.Serialization;
 
 public class SavePoint : MonoBehaviour, IInteractable
 {
+    [Header("Event")] 
+    public VoidEventSO saveSceneEvent;
+    
     [Header("Component")]
     public SpriteRenderer saveWordSpriteRenderer;
 
@@ -37,5 +40,7 @@ public class SavePoint : MonoBehaviour, IInteractable
         isSave = true;
         lightObj.SetActive(true);
         gameObject.tag = "Untagged";
+        
+        saveSceneEvent.RaiseEvent();
     }
 }

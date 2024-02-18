@@ -10,3 +10,9 @@ public enum SceneType
 {
     Location, Menu
 }
+
+[Serializable]
+public enum PersistentType
+{
+    ReadWrite, DoNotPersist
+}

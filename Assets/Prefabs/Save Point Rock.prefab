@@ -311,7 +311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3494f7d617a034cfc9440cb881dea881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveSceneEvent: {fileID: 11400000, guid: 0a9083b5de18946a9b92517cebce7472, type: 2}
   saveWordSpriteRenderer: {fileID: 9197345097711531960}
+  lightObj: {fileID: 4272281734729146972}
   lightSprite: {fileID: -1469617329, guid: 5b2816dad8037427eb02eff538a2a561, type: 3}
   darkSprite: {fileID: 891987471, guid: 5b2816dad8037427eb02eff538a2a561, type: 3}
   isSave: 0
