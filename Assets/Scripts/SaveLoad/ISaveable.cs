@@ -9,5 +9,5 @@ public interface ISaveable
     void UnRegisterSaveData() => DataManager.instance.UnRegisterSaveData(this);
     
     void GetSaveData(Data data);
-    void LoadDate(Data data);
+    void LoadData(Data data);
 }

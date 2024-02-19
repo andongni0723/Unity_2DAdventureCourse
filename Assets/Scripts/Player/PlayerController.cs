@@ -2,12 +2,15 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
-{
+{ 
     [Header("Event")] 
-    public SceneLoadEventSO loadEventSO;
+    public SceneLoadEventSO sceneLoadEventSO;
     public VoidEventSO afterSceneLoadEventSO;
+    public VoidEventSO loadDataEventSO;
+    public VoidEventSO backToMenuEventSO;
     
     [Header("Components")]
     private PlayerInputControls inputControls;
@@ -24,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")] 
     public float speed = 10;
     public float hurtForce = 5;
-    public float jumpForce = 10;
+    public float jumpForce = 16.5f;
     public float canJumpCount = 2;
 
     [Header("Debug")]
@@ -42,26 +45,47 @@ public class PlayerController : MonoBehaviour
         inputControls.Gameplay.Jump.started += _ => Jump();
         inputControls.Gameplay.Walk.started += _ => ChangeToWalk();
         inputControls.Gameplay.Attack.started += _ => PlayerAttack();
+        
+        inputControls.Enable();
     }
-    
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Honey"))
+            jumpForce = 40;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Honey"))
+            jumpForce = 16.5f;
+    }
+
     #region Event
 
     private void OnEnable()
     {
-        inputControls.Enable();
-        
-        loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
+        sceneLoadEventSO.LoadRequestEvent += OnSceneLoadEvent;
         afterSceneLoadEventSO.OnEventRaised += OnAfterSceneLoadEvent;
+        loadDataEventSO.OnEventRaised += OnLoadDataEvent;
+        backToMenuEventSO.OnEventRaised += OnLoadDataEvent;
     }
 
     private void OnDisable()
     {
         inputControls.Disable();
-        loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
+        sceneLoadEventSO.LoadRequestEvent -= OnSceneLoadEvent;
         afterSceneLoadEventSO.OnEventRaised -= OnAfterSceneLoadEvent;
+        loadDataEventSO.OnEventRaised -= OnLoadDataEvent;
+        backToMenuEventSO.OnEventRaised -= OnLoadDataEvent;
     }
 
-    private void OnLoadRequestEvent(GameSceneSO sceneSO, Vector3 position, bool fadeScreen)
+    private void OnLoadDataEvent()
+    {
+        isDead = false;
+    }
+
+    private void OnSceneLoadEvent(GameSceneSO sceneSO, Vector3 position, bool fadeScreen)
     {
         inputControls.Disable();
     }

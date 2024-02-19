@@ -17,13 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: ea5b51fd123fe4204a9ef6ae3289ccff
   m_SerializeEntries:
-  - m_GUID: 8c9cfa26abfee488c85f1582747f6a02
-    m_Address: Cave
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4745c592657dc473fbec1ede9dfc397d
-    m_Address: Forest
+  - m_GUID: d5078cfc19d3b4041a7d02abebc6cbf4
+    m_Address: Menu
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -32,8 +27,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d5078cfc19d3b4041a7d02abebc6cbf4
-    m_Address: Menu
+  - m_GUID: 8c9cfa26abfee488c85f1582747f6a02
+    m_Address: Cave
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4745c592657dc473fbec1ede9dfc397d
+    m_Address: Forest
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

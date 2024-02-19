@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 7152101999048176478}
   - component: {fileID: 8056393414154510740}
   - component: {fileID: 5523652035040412875}
+  - component: {fileID: -1685892615364699701}
   m_Layer: 0
   m_Name: Save Point Rock
   m_TagString: Interactable
@@ -317,3 +318,17 @@ MonoBehaviour:
   lightSprite: {fileID: -1469617329, guid: 5b2816dad8037427eb02eff538a2a561, type: 3}
   darkSprite: {fileID: 891987471, guid: 5b2816dad8037427eb02eff538a2a561, type: 3}
   isSave: 0
+--- !u!114 &-1685892615364699701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6481107919908866400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5bd1ce9f2e44ddea14a836cd1f478a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistentType: 0
+  ID: f1d2b463-cb25-4cb3-b3df-bfbcf836c1c4

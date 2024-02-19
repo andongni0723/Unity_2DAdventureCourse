@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour, ISaveable
 {
     [Header("Event")]
     public SceneLoadEventSO loadEventSO;
@@ -16,6 +16,7 @@ public class SceneLoader : MonoBehaviour
     public VoidEventSO afterSceneLoadEventSO;
     public FadeEventSO fadeEventSO;
     public VoidEventSO newGameEventSO;
+    public VoidEventSO backToMenuEventSO;
     
     [Header("Data")]
     public GameSceneSO menuScene;
@@ -36,13 +37,9 @@ public class SceneLoader : MonoBehaviour
     private bool fadeScreen;
     private bool isLoading;
 
-    private void Awake()
-    {
-        // NewGame();
-    }
-
     private void Start()
     {
+        Application.targetFrameRate = 300;
         // Main menu
         loadEventSO.RaiseLoadRequestEvent(menuScene, menuPosition, true);
     }
@@ -51,14 +48,29 @@ public class SceneLoader : MonoBehaviour
 
     private void OnEnable()
     {
+        
         loadEventSO.LoadRequestEvent += OnLoadRequestEvent;
         newGameEventSO.OnEventRaised += NewGame;
+        backToMenuEventSO.OnEventRaised += OnBackToMenuEvent;
+        
+        ISaveable saveable = this;
+        saveable.RegisterSaveData();
     }
 
     private void OnDisable()
     {
         loadEventSO.LoadRequestEvent -= OnLoadRequestEvent;
         newGameEventSO.OnEventRaised += NewGame;
+        backToMenuEventSO.OnEventRaised -= OnBackToMenuEvent;
+        
+        ISaveable saveable = this;
+        saveable.UnRegisterSaveData();
+    }
+
+    private void OnBackToMenuEvent()
+    {
+        sceneToGo = menuScene;
+        loadEventSO.RaiseLoadRequestEvent(sceneToGo, menuPosition, true);
     }
 
     private void OnLoadRequestEvent(GameSceneSO sceneToGo, Vector3 positionToGo, bool fadeScreen)
@@ -132,5 +144,31 @@ public class SceneLoader : MonoBehaviour
         
         if(currentLoadScene.sceneType != SceneType.Menu)
             afterSceneLoadEventSO.RaiseEvent();
+        
+        // DataManager.instance.Save();
+        // DataManager.instance.Load();
+    }
+
+    public DataDefinition GetDataID()
+    {
+        return GetComponent<DataDefinition>();
+    }
+
+    public void GetSaveData(Data data)
+    {
+        data.SaveGameScene(currentLoadScene);
+    }
+
+    public void LoadData(Data data)
+    {
+        var playerID = playerTransform.GetComponent<DataDefinition>().ID;
+        if (data.characterPosDict.ContainsKey(playerID))
+        {
+            positionToGo = data.characterPosDict[playerID]; 
+            sceneToGo = data.GetSavedScene();
+            
+            // DataManager.instance.Save();
+            OnLoadRequestEvent(sceneToGo, positionToGo, true);
+        }
     }
 }

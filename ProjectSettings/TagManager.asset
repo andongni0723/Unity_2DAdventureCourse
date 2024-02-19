@@ -8,6 +8,7 @@ TagManager:
   - Water
   - Spike
   - Interactable
+  - Honey
   layers:
   - Default
   - TransparentFX

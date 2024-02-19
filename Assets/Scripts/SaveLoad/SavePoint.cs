@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class SavePoint : MonoBehaviour, IInteractable
+public class SavePoint : MonoBehaviour, IInteractable, ISaveable
 {
     [Header("Event")] 
     public VoidEventSO saveSceneEvent;
@@ -21,9 +22,16 @@ public class SavePoint : MonoBehaviour, IInteractable
     //[Header("Debug")]
 
     private void OnEnable()
+    { 
+        UpdateSprite();
+        ISaveable saveable = this;
+        saveable.RegisterSaveData();
+    }
+
+    private void OnDisable()
     {
-        saveWordSpriteRenderer.sprite = isSave ? lightSprite : darkSprite;
-        lightObj.SetActive(isSave);
+        ISaveable saveable = this;
+        saveable.UnRegisterSaveData();
     }
 
     public void TriggerAction()
@@ -33,14 +41,45 @@ public class SavePoint : MonoBehaviour, IInteractable
         if(!isSave)
             OpenChest();
     }
+
+    private void UpdateSprite()
+    {
+        saveWordSpriteRenderer.sprite = isSave ? lightSprite : darkSprite;
+        lightObj.SetActive(isSave); 
+    }
     
     private void OpenChest()
-    { 
-        saveWordSpriteRenderer.sprite = lightSprite;
+    {
         isSave = true;
-        lightObj.SetActive(true);
+        UpdateSprite();
         gameObject.tag = "Untagged";
-        
         saveSceneEvent.RaiseEvent();
+    }
+
+    public DataDefinition GetDataID()
+    {
+        return GetComponent<DataDefinition>();
+    }
+
+    public void GetSaveData(Data data)
+    {
+        if (data.boolSaveDataDict.ContainsKey(GetDataID().ID))
+        {
+            data.boolSaveDataDict[GetDataID().ID] = isSave;
+        }
+        else
+        {
+            data.boolSaveDataDict.Add(GetDataID().ID, isSave);
+        }
+    }
+
+    public void LoadData(Data data)
+    {
+        if (data.boolSaveDataDict.ContainsKey(GetDataID().ID))
+        {
+            isSave = data.boolSaveDataDict[GetDataID().ID];
+            Debug.Log(isSave);
+            UpdateSprite();
+        }
     }
 }

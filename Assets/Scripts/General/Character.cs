@@ -42,9 +42,12 @@ public class Character : MonoBehaviour, ISaveable
         if (other.CompareTag("Water"))
         {
             // Die 
-            currentHealth = 0;
-            OnHealthChange?.Invoke(this);
-            OnDead?.Invoke();
+            if (currentHealth > 0)
+            {
+                currentHealth = 0;
+                OnHealthChange?.Invoke(this);
+                OnDead?.Invoke(); 
+            }
         }
     }
 
@@ -139,18 +142,22 @@ public class Character : MonoBehaviour, ISaveable
         if (data.characterPosDict.ContainsKey(GetDataID().ID))
         {
             data.characterPosDict[GetDataID().ID] = transform.position;
+            data.floatSaveDataDict[GetDataID().ID + "hp"] = currentHealth;
         }
         else
         {
             data.characterPosDict.Add(GetDataID().ID, transform.position);
+            data.floatSaveDataDict.Add(GetDataID().ID + "hp", currentHealth);
         }
     }
 
-    public void LoadDate(Data data)
+    public void LoadData(Data data)
     {
         if (data.characterPosDict.ContainsKey(GetDataID().ID))
         {
             transform.position = data.characterPosDict[GetDataID().ID];
+            currentHealth = data.floatSaveDataDict[GetDataID().ID + "hp"];
+            OnHealthChange?.Invoke(this);
         }
     }
 }

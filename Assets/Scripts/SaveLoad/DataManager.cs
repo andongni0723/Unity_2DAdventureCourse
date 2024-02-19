@@ -24,6 +24,7 @@ public class DataManager : MonoBehaviour
     
     [Header("Event")]
     public VoidEventSO saveEvent;
+    public VoidEventSO loadDataEvent;
     //[Header("Component")]
     //[Header("Settings")]
     //[Header("Debug")]
@@ -31,10 +32,12 @@ public class DataManager : MonoBehaviour
     private void OnEnable()
     {
         saveEvent.OnEventRaised += Save;
+        loadDataEvent.OnEventRaised += Load;
     }
     private void OnDisable()
     {
         saveEvent.OnEventRaised -= Save;
+        loadDataEvent.OnEventRaised -= Load;
     }
 
     private void Update()
@@ -60,18 +63,13 @@ public class DataManager : MonoBehaviour
         {
             saveable.GetSaveData(saveData);
         }
-
-        foreach (var item in saveData.characterPosDict)
-        {
-            Debug.Log(item.Key + " : " + item.Value);
-        }
     }
 
     public void Load()
     {
         foreach (var saveable in saveableList)
         {
-            saveable.LoadDate(saveData);
+            saveable.LoadData(saveData);
         } 
     }
 }

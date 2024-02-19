@@ -197,6 +197,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9be070b2-f4a8-4255-9e11-c7218d5470e2",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "26857cc5-c587-46a7-9def-54b97639b671",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
@@ -209,10 +220,21 @@
                 {
                     "name": "",
                     "id": "07c171ce-32fe-489a-a5a5-50e9354820d6",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26521bf7-1f62-4f3d-92c4-40d85c2c5f0c",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
